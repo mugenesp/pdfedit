@@ -474,7 +474,7 @@ def generate_word(req: WordRequest):
         p_disc.paragraph_format.space_before = Pt(25)
         p_disc.alignment = WD_ALIGN_PARAGRAPH.CENTER
         
-        run_disc = p_disc.add_run("🔒 Documento para uso interno exclusivo de Grupo Vegusa. Queda estrictamente prohibida la divulgación o difusión de este archivo fuera de la empresa.")
+        run_disc = p_disc.add_run("🔒 Documento para uso interno exclusivo de Grupo Vegusa. Queda strictly prohibida la divulgación o difusión de este archivo fuera de la empresa.")
         run_disc.font.size = Pt(8.5)
         run_disc.font.italic = True
         run_disc.font.bold = True
@@ -614,7 +614,7 @@ def descarga_invoice(req: DownloadRequest):
         finally: browser.close()
 
 
-# --- ENDPOINT 6: EXTRACT COORDINATES ---
+# --- ENDPOINT 6: EXTRACT COORDINATES (v1.44 / v1.70 PyPDF2) ---
 @app.post("/extract_coordinates")
 def get_coordinates(req: CoordinateRequest):
     try:
@@ -630,7 +630,7 @@ def get_coordinates(req: CoordinateRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-# --- ENDPOINT 7: FIND TEXT COORDS ---
+# --- ENDPOINT 7: FIND TEXT COORDS (v1.44 / v1.70 PyPDF2) ---
 @app.post("/find_text_coords")
 def find_text_coords(req: CoordinateRequest):
     try:
@@ -648,7 +648,7 @@ def find_text_coords(req: CoordinateRequest):
     except Exception as e: raise HTTPException(status_code=500, detail=str(e))
 
 
-# --- ENDPOINT 8: EDIT INCOTERM ---
+# --- ENDPOINT 8: EDIT INCOTERM (v1.44 / v1.70 PyPDF2 + Cabeceras v2.15) ---
 @app.post("/edit_incoterm", response_class=Response)
 def edit_incoterm(req: IncotermReq):
     try:
@@ -664,7 +664,7 @@ def edit_incoterm(req: IncotermReq):
         raise HTTPException(status_code=500, detail=f"Error en edit_incoterm: {str(e)}")
 
 
-# --- ENDPOINT 9: EDIT BILLSHIP ---
+# --- ENDPOINT 9: EDIT BILLSHIP (v1.44 / v1.70 PyPDF2 + Cabeceras v2.15) ---
 @app.post("/edit_billship", response_class=Response)
 def edit_billship(req: BillShipReq):
     try:
@@ -687,7 +687,7 @@ def edit_billship(req: BillShipReq):
         raise HTTPException(status_code=500, detail=f"Error en edit_billship: {str(e)}")
 
 
-# --- ENDPOINT 10: OVERLAY TEXT BATCH ---
+# --- ENDPOINT 10: OVERLAY TEXT BATCH (v1.44 / v1.70 PyPDF2 + Cabeceras v2.15) ---
 @app.post("/overlay_text_batch", response_class=Response)
 def overlay_text_batch(req: CustomBatchReq):
     try:
@@ -708,7 +708,7 @@ def overlay_text_batch(req: CustomBatchReq):
         raise HTTPException(status_code=500, detail=f"Error en overlay_text_batch: {str(e)}")
 
 
-# --- ENDPOINT 11: CUT RANGE ---
+# --- ENDPOINT 11: CUT RANGE (v1.44 / v1.70 PyPDF2 + Cabeceras v2.15) ---
 @app.post("/cut_range", response_class=Response)
 def cut_range(req: CutRangeReq):
     try:
@@ -721,11 +721,10 @@ def cut_range(req: CutRangeReq):
             writer.add_page(reader.pages[i])
         return pdf_response(_export(writer), "recorte.pdf")
     except Exception as e:
-        print(f">>> [ERROR CUT_RANGE]: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error en cut_range: {str(e)}")
 
 
-# --- ENDPOINT 12: EXTRACT CUSTOM PAGES ---
+# --- ENDPOINT 12: EXTRACT CUSTOM PAGES (v1.44 / v1.70 PyPDF2 + Cabeceras v2.15) ---
 @app.post("/extract_custom_pages", response_class=Response)
 def extract_custom_pages(req: CustomPagesReq):
     try:
